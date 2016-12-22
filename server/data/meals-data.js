@@ -2,42 +2,42 @@
 'use strict';
 
 module.exports = function(models, validator) {
-    const Food = models.Food;
+    const Meal = models.Meal;
 
     return {
-        getAllFoods() {
+        getAllMeals() {
             return new Promise((resolve, reject) => {
-                Food.find({}, function(err, foods) {
+                Meal.find({}, function(err, meals) {
                     if (err) {
                         return reject(err);
                     };
 
-                    return resolve(foods);
+                    return resolve(meals);
                 });
             });
         },
-        getFoodById(id) {
+        getMealById(id) {
             return new Promise((resolve, reject) => {
-                Food.findOne({ _id: id }, (err, food) => {
+                Meal.findOne({ _id: id }, (err, meal) => {
                     if (err) {
                         return reject(err);
                     }
 
-                    if (!food) {
+                    if (!meal) {
                         return resolve(null);
                     }
 
-                    return resolve(food);
+                    return resolve(meal);
                 });
             });
         },
-        getMostPopularFoods() {
+        getMostPopularMeals() {
             return new Promise((resolve, reject) => {
-                const foods = Food.find({})
+                const meals = Meal.find({})
                     .sort({ 'likes': 'desc' })
                     .limit(10);
 
-                resolve(foods);
+                resolve(meals);
             });
         }
     };

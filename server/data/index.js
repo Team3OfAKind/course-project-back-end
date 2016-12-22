@@ -9,10 +9,10 @@ module.exports = function(config) {
     mongoose.Promise = global.Promise;
     mongoose.connect(config.connectionString);
 
-    const Food = require('../models/food-model'),
+    const Meal = require('../models/meal-model'),
         User = require('../models/user-model'),
         validator = require('../utilities/validator'),
-        models = { Food, User},
+        models = { Meal, User},
         data = {};
 
     fs.readdirSync('./server/data')

@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports = ({ app, controllers, authentication, uploadCompetitionImage }) => {
-    const controller = controllers.foods;
+    const controller = controllers.meals;
 
-        app.get('/api/foods/', controller.getAll);
+        app.get('/api/meals/', controller.getAll);
 };

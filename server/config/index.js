@@ -3,7 +3,7 @@
 
 const connectionStrings = {
     production: process.env.CONNECTION_STRING,
-    development: "mongodb://localhost:27017/restaurantDb"
+    development: "mongodb://localhost:27017/foodDb"
 };
 
 module.exports = {

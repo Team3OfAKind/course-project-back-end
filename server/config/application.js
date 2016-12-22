@@ -15,7 +15,7 @@ const secretStrings = {
 
 const crossOrigin = {
     production: "heroku-something",
-    development: "http://localhost:3000"
+    development: "http://localhost:4200"
 };
 
 app.use(cookieParser());
