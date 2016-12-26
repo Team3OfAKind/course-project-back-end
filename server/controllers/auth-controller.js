@@ -1,14 +1,15 @@
 'use strict';
 const jwt = require('jsonwebtoken');
+const constants = require('../utilities/constants');
+const encryptor = require('../utilities/encryptor');
 
 module.exports = ({ data, passport }) => {
     return {
         register(req, res) {
-            console.log(req);
+            const body = req.body;
             const user = {
                 username: req.body.username,
                 passHash: req.body.password,
-                salt: req.body.salt,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 image: 'http://www.bathspa.ac.uk/media/WebProfilePictures/default_profile.jpg',
@@ -20,39 +21,34 @@ module.exports = ({ data, passport }) => {
                     res.json({ success: 'Registration successfull' });
                 })
                 .catch(() => {
-                    // TODO: redirect to another page
                     res.json({ error: 'Registration failed' });
                 });
         },
-        loginLocal(req, res, next) {
-            const auth = passport.authenticate('jwt', (err, user) => {
-                if (err) {
-                    return res.json({ error: 'Invalid username or password' });
-                    // next(err);
-                    // return;
-                }
+        loginLocal(req, res) {
+            const username = req.body.username;
+            const password = req.body.password;
 
-                if (!user) {
-                    return res.json({ error: 'Invalid username or password' });
-                }
 
-                let token = jwt.sign(user, 'james bond 007', {
-                    expiresIn: 3600
-                });
-                req.login(user, err => {
-                    if (err) {
-                        next(err);
-                        return;
+            data.getUserByUsername(username)
+                .then(user => {
+                    if (!user) {
+                        res.status(401).json({ message: "no such user found" });
                     }
-                    res.status(201).json({
-                        success: true,
-                        message: 'Login succesfully!',
-                        token: 'JWT ' + token
-                    });
-                });
-            });
 
-            auth(req, res, next);
+                    const passHash = encryptor.getPassHash(user.salt, password);
+
+                    if (user.passHash === passHash) {
+                        var payload = { id: user._id };
+                        var token = jwt.sign(payload, constants.secret);
+                        res.json({ success: true,user: {username: user.username, token:'JWT ' + token }});
+                    } else {
+                        res.status(401).json({ message: "passwords did not match" });
+                    }
+                })
+                .catch(err=>{
+                    res.status(400).json({error: 'Login unsuccessful!'});
+                })
+            
         },
         logout(req, res) {
             req.logout();

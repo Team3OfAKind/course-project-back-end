@@ -6,15 +6,10 @@ const connectionStrings = {
     development: "mongodb://localhost:27017/foodDb"
 };
 
-const secretStrings = {
-    production: process.env.SECRET_STRING,
-    development: 'james bond 007'
-};
 
 module.exports = {
     connectionString: connectionStrings[process.env.NODE_ENV || "development"],
-    port: process.env.PORT || 3001,
-    secret: secretStrings[process.env.NODE_ENV || "development"]
+    port: process.env.PORT || 3001
 };
 
 const path = require('path');

@@ -6,7 +6,7 @@ const config = require('./server/config/'),
     passport = require('passport'),
     controllers = require('./server/controllers')({ data, passport });
 
-require('./server/config/passport')(app, data, config);
+require('./server/config/passport')(app, data);
 require('./server/routers')({ app, data, controllers });
 
 app.listen(config.port);

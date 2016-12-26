@@ -31,21 +31,7 @@ module.exports = function(models, validator) {
                     if (!user) {
                         return reject({ error: 'User not found' });
                     }
-                    const joinedCompetitions = [];
-                    const attendedCompetitions = [];
 
-                    user.competitions.forEach(c => {
-                        if (c.attended) {
-                            attendedCompetitions.push(c);
-                        } else if (asPersonalPage) {
-                            joinedCompetitions.push(c);
-                        }
-                    });
-
-                    user.attendedCompetitions = attendedCompetitions;
-                    if (asPersonalPage) {
-                        user.joinedCompetitions = joinedCompetitions;
-                    }
                     return resolve(user);
                 });
             });
