@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 module.exports = ({ data, passport }) => {
     return {
         register(req, res) {
+            console.log(req);
             const user = {
                 username: req.body.username,
                 passHash: req.body.password,
@@ -24,7 +25,7 @@ module.exports = ({ data, passport }) => {
                 });
         },
         loginLocal(req, res, next) {
-            const auth = passport.authenticate('local', (err, user) => {
+            const auth = passport.authenticate('jwt', (err, user) => {
                 if (err) {
                     return res.json({ error: 'Invalid username or password' });
                     // next(err);

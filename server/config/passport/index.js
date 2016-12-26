@@ -1,10 +1,10 @@
 'use strict';
 
 const passport = require('passport');
-const config = require('../index');
+// const config = require('../index');
 const stage = process.env.NODE_ENV || 'development';
 
-module.exports = (app, data) => {
+module.exports = (app, data, config) => {
 
     passport.serializeUser((user, done) => {
         if (user) {
@@ -22,7 +22,7 @@ module.exports = (app, data) => {
             });
     });
     require('./local-strategy')(passport, data);
-    require('./jwt-strategy')(passport, data, config[stage]);
+    require('./jwt-strategy')(passport, data, config);
 
     app.use(passport.initialize());
     app.use(passport.session());
