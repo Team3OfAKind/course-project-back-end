@@ -1,8 +1,7 @@
 'use strict';
 
 const passport = require('passport');
-const data = require('../../data')();
-const config = require('../config');
+const config = require('../index');
 const stage = process.env.NODE_ENV || 'development';
 
 module.exports = (app, data) => {
@@ -23,7 +22,7 @@ module.exports = (app, data) => {
             });
     });
     require('./local-strategy')(passport, data);
-	require('./jwt-strategy')(passport, data, config[stage]);
+    require('./jwt-strategy')(passport, data, config[stage]);
 
     app.use(passport.initialize());
     app.use(passport.session());
