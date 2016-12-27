@@ -98,6 +98,14 @@ module.exports = function(models, validator) {
                     }).catch(err => reject(err));
             });
         },
+        removeMealFromCart(username, meal) {
+            return new Promise((resolve, reject) => {
+                User.findOneAndUpdate({ 'username': username }, { $pull: { 'cartMeals': meal } })
+                    .then(() => {
+                        resolve();
+                    }).catch(err => reject(err));
+            });
+        },
         updateUserCartMealQuantity(username, mealName, incrementBy) {
             return new Promise((resolve, reject) => {
                 User.findOne({ 'username': username }, (err, user) => {

@@ -24,7 +24,6 @@ module.exports = ({ data }) => {
                 });
         },
         getCart(req, res) {
-            console.log('getCart');
             const username = req.params.username;
 
             data.getUserCartMeals(username)
@@ -54,6 +53,15 @@ module.exports = ({ data }) => {
                                 return res.json({result: {success: true, message: 'Meal added to cart'}});
                             })
                     }
+                })
+        },
+        removeFromCart(req, res) {
+            const username = req.params.username;
+            const meal = req.body;
+
+            data.removeMealFromCart(username, meal)
+                .then(() => {
+                    return res.json({result: {success: true, message: 'Meal removed from cart'}});
                 })
         }
     }
