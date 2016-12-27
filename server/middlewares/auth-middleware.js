@@ -1,6 +1,6 @@
 /* globals require */
 'use strict';
-const passport = require("passport");
+
 const jwt = require('jwt-simple');
 const constants = require('../utilities/constants');
 

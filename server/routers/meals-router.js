@@ -1,9 +1,8 @@
 /* globals require */
 'use strict';
-const passport = require('passport');
 
-module.exports = ({ app, controllers, authentication }) => {
+module.exports = ({ app, controllers, passport }) => {
     const controller = controllers.meals;
 
-        app.get('/api/meals', /*authentication.isAuthenticated,*/ controller.getAll);
+    app.get('/api/meals', /* passport.authenticate('jwt', { session: false }), */ controller.getAll);
 };
