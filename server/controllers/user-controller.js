@@ -22,6 +22,14 @@ module.exports = ({ data }) => {
                 .then(() => {
                     return res.json({result: {success: true}})
                 });
+        },
+        getCart(req, res) {
+            const username = req.params.username;
+
+            data.getUserCartProducts(username)
+                .then((products) => {
+                    res.json({ result: { products } });
+                })
         }
     }
 }

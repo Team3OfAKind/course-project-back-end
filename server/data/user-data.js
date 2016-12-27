@@ -74,6 +74,21 @@ module.exports = function(models, validator) {
                         return resolve(user);
                     })
             });
-        }
-    };
+        },
+        getUserCartProducts(username) {
+            return new Promise((resolve, reject) => {
+                User.findOne({ 'username': username }, (err, user) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    if (!user) {
+                        return reject({ error: 'User not found' });
+                    }
+
+                    return resolve(user.cartProducts);
+                })
+            });
+       }
+    }
 }

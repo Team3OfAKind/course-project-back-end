@@ -14,6 +14,7 @@ module.exports = ({ data, passport }) => {
                 lastName: req.body.lastName,
                 image: 'http://www.bathspa.ac.uk/media/WebProfilePictures/default_profile.jpg',
                 email: req.body.email,
+                cartProducts: []
             };
 
             data.createUser(user)
