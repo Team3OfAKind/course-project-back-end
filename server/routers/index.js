@@ -5,11 +5,11 @@ const fs = require('fs'),
     path = require('path'),
     authentication = require('../middlewares/auth-middleware');
 
-module.exports = ({ app, data, controllers, uploadUserImage, uploadCompetitionImage, uploadCategoryImage }) => {
+module.exports = ({ app, data, controllers }) => {
     fs.readdirSync('./server/routers')
         .filter(x => x.includes('-router'))
         .forEach(file => {
-            require(path.join(__dirname, file))({ app, data, controllers, authentication, uploadUserImage, uploadCompetitionImage, uploadCategoryImage });
+            require(path.join(__dirname, file))({ app, data, controllers, authentication});
         });
 
     app.get('*', function (req, res) {

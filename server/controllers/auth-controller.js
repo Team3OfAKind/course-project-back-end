@@ -1,5 +1,5 @@
 'use strict';
-const jwt = require('jsonwebtoken');
+const jwt = require('jwt-simple');
 const constants = require('../utilities/constants');
 const encryptor = require('../utilities/encryptor');
 
@@ -38,14 +38,17 @@ module.exports = ({ data, passport }) => {
                     const passHash = encryptor.getPassHash(user.salt, password);
 
                     if (user.passHash === passHash) {
+                        console.log('final stage');
                         var payload = { id: user._id };
-                        var token = jwt.sign(payload, constants.secret);
+                        var token = jwt.encode(payload, constants.secret);
+                        console.log(token);
                         res.json({ success: true,user: {username: user.username, token:'JWT ' + token }});
                     } else {
                         res.status(401).json({ message: "passwords did not match" });
                     }
                 })
                 .catch(err=>{
+                    console.log(err);
                     res.status(400).json({error: 'Login unsuccessful!'});
                 })
             

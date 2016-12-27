@@ -21,7 +21,7 @@ module.exports = (app, data) => {
                 done(err, false);
             });
     });
-    require('./local-strategy')(passport, data);
+    //require('./local-strategy')(passport, data);
     require('./jwt-strategy')(passport, data);
 
     app.use(passport.initialize());

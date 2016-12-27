@@ -26,7 +26,7 @@ app.use(session({ secret: secretStrings[process.env.NODE_ENV || "development"], 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", crossOrigin[process.env.NODE_ENV || "development"]);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
 module.exports = app;
