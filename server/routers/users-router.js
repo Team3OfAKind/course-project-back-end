@@ -5,5 +5,6 @@ module.exports = ({ app, controllers, authentication }) => {
 
         app.get('/api/users/:username',  controller.getProfile);
         app.post('/api/users/:username/edit', controller.editProfile);
-        app.get('/api/users/:username/cart', controller.getCart)
+        app.get('/api/users/:username/cart', controller.getCart);
+        app.put('/api/users/:username/cart', controller.addToCart);
 };

@@ -75,7 +75,7 @@ module.exports = function(models, validator) {
                     })
             });
         },
-        getUserCartProducts(username) {
+        getUserCartMeals(username) {
             return new Promise((resolve, reject) => {
                 User.findOne({ 'username': username }, (err, user) => {
                     if (err) {
@@ -86,9 +86,43 @@ module.exports = function(models, validator) {
                         return reject({ error: 'User not found' });
                     }
 
-                    return resolve(user.cartProducts);
+                    return resolve(user.cartMeals);
                 })
             });
-       }
+        },
+        addMealToCart(username, meal) {
+            return new Promise((resolve, reject) => {
+                User.findOneAndUpdate({ 'username': username }, { $addToSet: { 'cartMeals': meal } })
+                    .then((done) => {
+                        resolve(done);
+                    }).catch(er => reject(er));
+            });
+        },
+        updateUserCartMealQuantity(username, mealName, incrementBy) {
+            return new Promise((resolve, reject) => {
+                User.findOne({ 'username': username }, (err, user) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    if (!user) {
+                        return reject({ error: 'User not found' });
+                    }
+
+                    let meals = user.cartMeals;
+                    meals.forEach(meal => {
+                        if (meal.name === mealName) {
+                            meal.quantity += incrementBy;
+                        }
+                    })
+                    return resolve(meals);
+                }).then((meals) => {
+                    User.findOneAndUpdate({ 'username': username }, { 'cartMeals': meals })
+                        .then((done) => {
+                            resolve(done);
+                        }).catch(er => reject(er));
+                })
+            });
+        }
     }
 }
