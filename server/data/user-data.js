@@ -93,9 +93,9 @@ module.exports = function(models, validator) {
         addMealToCart(username, meal) {
             return new Promise((resolve, reject) => {
                 User.findOneAndUpdate({ 'username': username }, { $addToSet: { 'cartMeals': meal } })
-                    .then((done) => {
-                        resolve(done);
-                    }).catch(er => reject(er));
+                    .then(() => {
+                        resolve();
+                    }).catch(err => reject(err));
             });
         },
         updateUserCartMealQuantity(username, mealName, incrementBy) {
@@ -109,18 +109,20 @@ module.exports = function(models, validator) {
                         return reject({ error: 'User not found' });
                     }
 
+                    return resolve(user);
+
+                }).then((user) => {
+
                     let meals = user.cartMeals;
                     meals.forEach(meal => {
                         if (meal.name === mealName) {
-                            meal.quantity += incrementBy;
+                            meal.quantity = +meal.quantity + incrementBy;
                         }
                     })
-                    return resolve(meals);
-                }).then((meals) => {
                     User.findOneAndUpdate({ 'username': username }, { 'cartMeals': meals })
-                        .then((done) => {
-                            resolve(done);
-                        }).catch(er => reject(er));
+                        .then(() => {
+                            resolve();
+                        }).catch(err => reject(err));
                 })
             });
         }

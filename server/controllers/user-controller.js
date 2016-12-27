@@ -28,22 +28,18 @@ module.exports = ({ data }) => {
             const username = req.params.username;
 
             data.getUserCartMeals(username)
-                .then((products) => {
-                    res.json({ result: { products } });
+                .then((meals) => {
+                    res.json({ result: { meals } });
                 })
         }, 
         addToCart(req, res) {
-            console.log('addToCart');
             const username = req.params.username;
             const meal = req.body;
             let updated = false;
-            console.log(username);
-            console.log(meal);
-            data.getUserCartProducts(username)
+            data.getUserCartMeals(username)
                 .then((products) => {
                     products.forEach(pr => {
                         if (pr.name === meal.name){
-                            console.log('NAME:' + pr.name);
                             data.updateUserCartMealQuantity(username, meal.name, 1)
                                 .then(() => {
                                     updated = true;
@@ -53,10 +49,9 @@ module.exports = ({ data }) => {
                     })
                 }).then(() => {
                     if (!updated) {
-                        console.log('here');
                         data.addMealToCart(username, meal)
                             .then(() => {
-                                return res.json({result: {success: true}});
+                                return res.json({result: {success: true, message: 'Meal added to cart'}});
                             })
                     }
                 })
