@@ -45,7 +45,7 @@ module.exports = ({ data }) => {
                             data.updateUserCartMealQuantity(username, meal.name, 1)
                                 .then(() => {
                                     updated = true;
-                                    return res.json({result: {success: true}});
+                                    return res.json({result: {success: true, message: 'Meal added to cart'}});
                                 });
                         }
                     })
