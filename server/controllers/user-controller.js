@@ -6,7 +6,7 @@ module.exports = ({ data }) => {
             res.json({ result: { name: 'Pesho' } });
         },
         editProfile(req, res) {
-            const username = req.params.username;
+            const username = req.user.username;
 
             const userInfo = {
                 firstName: req.body.firstName,
@@ -24,16 +24,19 @@ module.exports = ({ data }) => {
                 });
         },
         getCart(req, res) {
-            const username = req.params.username;
-
+            const username = req.user.username;
+            console.log("get meals " + username);
             data.getUserCartMeals(username)
                 .then((meals) => {
+                    console.log(meals);
                     res.json({ result: { meals } });
                 })
         }, 
         addToCart(req, res) {
-            const username = req.params.username;
+            const username = req.user.username;
             const meal = req.body;
+            console.log(username);
+            console.log(meal);
             let updated = false;
             data.getUserCartMeals(username)
                 .then((products) => {
@@ -56,7 +59,7 @@ module.exports = ({ data }) => {
                 })
         },
         removeFromCart(req, res) {
-            const username = req.params.username;
+            const username = req.user.username;
             const meal = req.body;
 
             data.removeMealFromCart(username, meal)
