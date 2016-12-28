@@ -19,7 +19,7 @@ module.exports = ({ data, passport }) => {
 
             data.createUser(user)
                 .then(() => {
-                    res.json({ success: 'Registration successfull' });
+                    res.json({ message: 'Registration successfull' });
                 })
                 .catch(() => {
                     res.json({ error: 'Registration failed' });
@@ -67,7 +67,7 @@ module.exports = ({ data, passport }) => {
                             expiresIn: 100800000 // in seconds
                         });
                         console.log(token);
-                        res.json({ success: true, user: { username: user.username, token: 'JWT '+token } });
+                        res.json({message:'Login successful', success: true, user: { username: user.username, token: 'JWT '+token } });
                     } else {
                         res.status(401).json({ message: "passwords did not match" });
                     }
