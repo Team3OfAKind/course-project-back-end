@@ -106,7 +106,7 @@ module.exports = function(models, validator) {
                     }).catch(err => reject(err));
             });
         },
-        updateUserCartMealQuantity(username, mealName, incrementBy) {
+        updateUserCartMealQuantity(username, mealName, changeBy) {
             return new Promise((resolve, reject) => {
                 User.findOne({ 'username': username }, (err, user) => {
                     if (err) {
@@ -124,7 +124,7 @@ module.exports = function(models, validator) {
                     let meals = user.cartMeals;
                     meals.forEach(meal => {
                         if (meal.name === mealName) {
-                            meal.quantity = +meal.quantity + incrementBy;
+                            meal.quantity = +meal.quantity + changeBy;
                         }
                     })
                     User.findOneAndUpdate({ 'username': username }, { 'cartMeals': meals })

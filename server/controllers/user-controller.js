@@ -28,15 +28,12 @@ module.exports = ({ data }) => {
             console.log("get meals " + username);
             data.getUserCartMeals(username)
                 .then((meals) => {
-                    console.log(meals);
                     res.json({ result: { meals } });
                 })
         }, 
         addToCart(req, res) {
             const username = req.user.username;
             const meal = req.body;
-            console.log(username);
-            console.log(meal);
             let updated = false;
             data.getUserCartMeals(username)
                 .then((products) => {
@@ -57,6 +54,17 @@ module.exports = ({ data }) => {
                             })
                     }
                 })
+        },
+        updateMealCartQuantity(req, res) {
+            const username = req.user.username;
+            const mealName = req.body.name;
+            const changeBy = req.body.changeBy;
+
+            data.updateUserCartMealQuantity(username, mealName, changeBy)
+                .then(() => {
+                    return res.json({result: {success: true, message: 'Meal quantity updated'}});
+                })
+
         },
         removeFromCart(req, res) {
             const username = req.user.username;
