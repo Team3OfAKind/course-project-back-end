@@ -1,10 +1,15 @@
 'use strict';
 
-module.exports = function() {
+module.exports = function({data}) {
     return {
-        getHome(req, res) {
-            console.log(req.user);
-            res.json({ data: 'data' });
+        getGallery(req,res){
+            data.getAllImages()
+                .then(images=>{
+                    res.json({result: {photos:images}});
+                })
+                .catch(err=>{
+                    res.json({message: 'Photos not found'});
+                });
         }
     };
 };
