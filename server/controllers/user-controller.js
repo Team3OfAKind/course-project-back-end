@@ -3,7 +3,7 @@
 module.exports = ({ data }) => {
     return {
         getProfile(req, res) {
-            res.json({ result: { name: 'Pesho' } });
+            res.json({ result: { user: req.user } });
         },
         editProfile(req, res) {
             const username = req.user.username;

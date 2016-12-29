@@ -3,6 +3,7 @@
 module.exports = ({ app, controllers, passport }) => {
     const controller = controllers.user;
 
+        app.get('/api/users/profile', passport.authenticate('jwt', { session: false }), controller.getProfile);
         app.get('/api/users/cart', passport.authenticate('jwt', { session: false }), controller.getCart);
         app.get('/api/users/addresses', passport.authenticate('jwt', { session: false }), controller.getAddresses);
         app.post('/api/users/cart/add',  passport.authenticate('jwt', { session: false }), controller.addToCart);
