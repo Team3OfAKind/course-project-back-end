@@ -17,7 +17,7 @@ module.exports = ({ data, passport }) => {
                 cartMeals: [],
                 addresses: []
             };
-
+            console.log('register contr ' + user.username);
             data.createUser(user)
                 .then(() => {
                     res.json({ message: 'Registration successfull' });

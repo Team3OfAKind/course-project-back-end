@@ -42,6 +42,7 @@ module.exports = function(models, validator) {
                 const salt = hashing.getSalt(),
                     passHash = hashing.getPassHash(salt, user.passHash);
                 if (!validator.isValidUser(user)) {
+                    console.log('invalid!');
                     return reject({ error: 'Invalid information' });
                 }
                 const newUser = new User({
@@ -55,7 +56,7 @@ module.exports = function(models, validator) {
                     cartMeals: user.cartMeals,
                     addresses: user.addresses
                 });
-
+                console.log('adding user')
                 newUser.save(err => {
 
                     if (err) {
@@ -149,6 +150,14 @@ module.exports = function(models, validator) {
 
                     return resolve(user.addresses);
                 })
+            });
+        },
+        addUserAddress(username, address) {
+            return new Promise((resolve, reject) => {
+                User.findOneAndUpdate({ 'username': username }, { $addToSet: { 'addresses': address } })
+                    .then(() => {
+                        resolve();
+                    }).catch(err => reject(err));
             });
         }
     }

@@ -38,6 +38,14 @@ module.exports = ({ data }) => {
                     res.json({ result: { addresses } });
                 })
         },
+        addAddress(req, res) {
+            const username = req.user.username;
+            const address = req.body;
+            data.addUserAddress(username, address)
+                .then(() => {
+                   return res.json({result: {success: true, message: 'Address added'}}); 
+                })
+        },
         addToCart(req, res) {
             const username = req.user.username;
             const meal = req.body;
