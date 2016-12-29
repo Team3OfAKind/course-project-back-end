@@ -51,7 +51,9 @@ module.exports = function(models, validator) {
                     passHash: passHash,
                     salt: salt,
                     email: user.email,
-                    image: user.image
+                    image: user.image,
+                    cartMeals: user.cartMeals,
+                    addresses: user.addresses
                 });
 
                 newUser.save(err => {
@@ -131,6 +133,21 @@ module.exports = function(models, validator) {
                         .then(() => {
                             resolve();
                         }).catch(err => reject(err));
+                })
+            });
+        },
+        getUserAddresses(username) {
+            return new Promise((resolve, reject) => {
+                User.findOne({ 'username': username }, (err, user) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    if (!user) {
+                        return reject({ error: 'User not found' });
+                    }
+
+                    return resolve(user.addresses);
                 })
             });
         }

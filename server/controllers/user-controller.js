@@ -31,6 +31,13 @@ module.exports = ({ data }) => {
                     res.json({ result: { meals } });
                 })
         }, 
+        getAddresses(req, res) {
+            const username = req.user.username;
+            data.getUserAddresses(username)
+                .then((addresses) => {
+                    res.json({ result: { addresses } });
+                })
+        },
         addToCart(req, res) {
             const username = req.user.username;
             const meal = req.body;

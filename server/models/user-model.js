@@ -33,7 +33,11 @@ const userSchema = new Schema({
     salt: { type: String, required: true },
     email: { type: String, match: constants.EMAIL_REGEX },
     image: { type: String, default: '' },
-    cartMeals: [{}]
+    cartMeals: [{}],
+    addresses: [{
+        street: { type: String, required: true },
+        city: { type: String, required: true }
+    }]
 });
 
 mongoose.model('User', userSchema);
