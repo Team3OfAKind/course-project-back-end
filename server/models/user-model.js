@@ -37,7 +37,8 @@ const userSchema = new Schema({
     addresses: [{
         street: { type: String, required: true },
         city: { type: String, required: true }
-    }]
+    }],
+    favouriteMeals: []
 });
 
 mongoose.model('User', userSchema);

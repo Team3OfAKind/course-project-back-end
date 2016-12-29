@@ -39,6 +39,33 @@ module.exports = function(models, validator) {
 
                 resolve(meals);
             });
+        },
+        addUserToMeal(mealId, username) {
+            return new Promise((resolve, reject) => {
+                const conditions = {
+                    _id: mealId,
+                    'usersLiked': { $ne: username }
+                }
+                Meal.findOneAndUpdate(conditions, { $addToSet: { 'usersLiked': username  } },
+                    (err, meal) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        return resolve(meal);
+                    })
+            });
+        },
+        removeUserFromMeal(mealId, username) {
+            return new Promise((resolve, reject) => {
+                Meal.update({ _id: mealId }, { $pull: { 'usersLiked': username } }, 
+                (err, meal) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    resolve(meal);
+                });
+            });
         }
     };
 };

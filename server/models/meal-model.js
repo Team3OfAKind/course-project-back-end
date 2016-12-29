@@ -20,7 +20,8 @@ let MealSchema = new Schema({
     price: {
         type: String,
         required: true
-    }
+    },
+    usersLiked: [String]
 });
 
 MealSchema.methods.getActive = function() {

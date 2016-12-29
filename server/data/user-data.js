@@ -2,7 +2,7 @@
 
 const hashing = require('../utilities/encryptor');
 
-module.exports = function(models, validator) {
+module.exports = function (models, validator) {
     const User = models.User;
 
     return {
@@ -159,6 +159,32 @@ module.exports = function(models, validator) {
                         resolve();
                     }).catch(err => reject(err));
             });
-        }
+        },
+        addMealToUser(username, meal) { 
+            console.log('like');
+            return new Promise((resolve, reject) => {
+                User.findOneAndUpdate({ 'username': username }, { $push: { 'favouriteMeals': meal } },
+                    (err, user) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        return resolve(user);
+                    })
+            });
+        },
+        removeMealFromFavourites(username, meal) {
+            console.log('remove');
+            console.log(meal);
+            return new Promise((resolve, reject) => {
+                User.findOneAndUpdate({ username }, { $pull: { 'favouriteMeals': meal } },(err, user) => {
+                    if (err) {
+                        //console.log(err);
+                        return reject(err);
+                    }
+                    //console.log(user);
+                    resolve(user);
+                });
+            });
+        },
     }
 }
