@@ -48,6 +48,7 @@ module.exports = function(models, validator) {
                 }
                 Meal.findOneAndUpdate(conditions, { $addToSet: { 'usersLiked': username  } },
                     (err, meal) => {
+                        console.log(meal);
                         if (err) {
                             return reject(err);
                         }

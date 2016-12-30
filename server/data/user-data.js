@@ -184,12 +184,12 @@ module.exports = function (models, validator) {
             console.log('remove');
             console.log(meal);
             return new Promise((resolve, reject) => {
-                User.findOneAndUpdate({ username }, { $pull: { 'favouriteMeals': meal } },(err, user) => {
+                User.findOneAndUpdate({ 'username': username }, { $pull: { 'favouriteMeals': meal } },(err, user) => {
                     if (err) {
-                        //console.log(err);
+                        console.log(err);
                         return reject(err);
                     }
-                    //console.log(user);
+                    console.log(user);
                     resolve(user);
                 });
             });

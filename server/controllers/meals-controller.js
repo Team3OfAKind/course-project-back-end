@@ -11,10 +11,12 @@ module.exports = ({ data }) => {
                 })
         },
         likeMeal(req,res){
+            console.log('like');
             const username = req.user.username;
             const id = req.body._id;
              data.addUserToMeal(id, username)
                 .then((meal) => {
+                    console.log(meal);
                     if (!meal) {
                         throw new Error("No meal found!");
                     }
