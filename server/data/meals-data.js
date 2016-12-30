@@ -45,7 +45,7 @@ module.exports = function(models, validator) {
             const skip = (page - 1) * pageSize,
                 limit = pageSize;
             return new Promise((resolve, reject) => {
-                Meal.find({
+                Meal.find({}, {},{
                     skip,
                     limit
                 }, (err, meals) => {

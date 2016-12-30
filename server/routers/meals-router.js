@@ -8,5 +8,4 @@ module.exports = ({ app, controllers, passport }) => {
     //app.get(mealsRoute, controller.getOnePage);
     app.put(mealsRoute + '/like', passport.authenticate('jwt', { session: false }), controller.likeMeal);
     app.put(mealsRoute + '/dislike', passport.authenticate('jwt', { session: false }), controller.dislikeMeal);
-
 };
