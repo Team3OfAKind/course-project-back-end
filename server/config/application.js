@@ -14,7 +14,7 @@ const secretStrings = {
 };
 
 const crossOrigin = {
-    production: "heroku-something",
+    production: "https://paradiserestaurant.herokuapp.com/",
     development: "http://localhost:4200"
 };
 
