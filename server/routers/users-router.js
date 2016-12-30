@@ -5,6 +5,7 @@ module.exports = ({ app, controllers, passport }) => {
         const usersRoute = '/api/users';
 
         app.get(usersRoute + '/profile', passport.authenticate('jwt', { session: false }), controller.getProfile);
+        app.put(usersRoute + '/profile/edit', passport.authenticate('jwt', { session: false }), controller.editProfile);                
         app.get(usersRoute + '/cart', passport.authenticate('jwt', { session: false }), controller.getCart);
         app.get(usersRoute + '/addresses', passport.authenticate('jwt', { session: false }), controller.getAddresses);
         app.post(usersRoute + '/addresses/add', passport.authenticate('jwt', { session: false }), controller.addAddress);
