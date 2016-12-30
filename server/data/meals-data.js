@@ -40,13 +40,41 @@ module.exports = function(models, validator) {
                 resolve(meals);
             });
         },
+
+        getMealsByPageSize({ page, pageSize }) {
+            const skip = (page - 1) * pageSize,
+                limit = pageSize;
+            return new Promise((resolve, reject) => {
+                Meal.find({
+                    skip,
+                    limit
+                }, (err, meals) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(meals);
+                })
+            })
+        },
+        getMealsCount() {
+            return new Promise((resolve, reject) => {
+                Meal.count({}, (err, count) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(count);
+                })
+            })
+        },
         addUserToMeal(mealId, username) {
             return new Promise((resolve, reject) => {
                 const conditions = {
                     _id: mealId,
                     'usersLiked': { $ne: username }
                 }
-                Meal.findOneAndUpdate(conditions, { $addToSet: { 'usersLiked': username  } },
+                Meal.findOneAndUpdate(conditions, { $addToSet: { 'usersLiked': username } },
                     (err, meal) => {
                         console.log(meal);
                         if (err) {
@@ -58,14 +86,14 @@ module.exports = function(models, validator) {
         },
         removeUserFromMeal(mealId, username) {
             return new Promise((resolve, reject) => {
-                Meal.update({ _id: mealId }, { $pull: { 'usersLiked': username } }, 
-                (err, meal) => {
-                    if (err) {
-                        return reject(err);
-                    }
+                Meal.update({ _id: mealId }, { $pull: { 'usersLiked': username } },
+                    (err, meal) => {
+                        if (err) {
+                            return reject(err);
+                        }
 
-                    resolve(meal);
-                });
+                        resolve(meal);
+                    });
             });
         }
     };
