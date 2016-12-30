@@ -33,6 +33,7 @@ module.exports = ({ data }) => {
             console.log('like');
             const username = req.user.username;
             const id = req.body._id;
+            console.log(req.body);
             data.addUserToMeal(id, username)
                 .then((meal) => {
                     console.log(meal);

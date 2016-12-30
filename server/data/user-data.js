@@ -184,10 +184,10 @@ module.exports = function (models, validator) {
             console.log('remove');
             console.log(meal);
             return new Promise((resolve, reject) => {
-                const userMeal = user.favouriteMeals.find(x=>x._id === meal._id);
-                const index = user.favouriteMeals.indexOf(userMeal);
+                const index = user.favouriteMeals.findIndex(x=>x._id+'' === meal._id+'');
+                console.log('INDEX: '+ index);
                 user.favouriteMeals.splice(index, 1);
-
+                console.log(user.favouriteMeals);
                 User.findOneAndUpdate({ 'username': user.username }, { 'favouriteMeals': user.favouriteMeals },(err, user) => {
                     if (err) {
                         console.log(err);
