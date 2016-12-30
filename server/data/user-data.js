@@ -160,6 +160,14 @@ module.exports = function (models, validator) {
                     }).catch(err => reject(err));
             });
         },
+        removeUserAddress(username, address) {
+            return new Promise((resolve, reject) => {
+                User.findOneAndUpdate({ 'username': username }, { $pull: { 'addresses': address } })
+                    .then(() => {
+                        resolve();
+                    }).catch(err => reject(err));
+            });
+        },
         addMealToUser(username, meal) { 
             console.log('like');
             return new Promise((resolve, reject) => {

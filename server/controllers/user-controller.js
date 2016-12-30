@@ -46,6 +46,14 @@ module.exports = ({ data }) => {
                    return res.json({result: {success: true, message: 'Address added'}}); 
                 })
         },
+        removeAddress(req, res) {
+            const username = req.user.username;
+            const address = req.body;
+            data.removeUserAddress(username, address)
+                .then(() => {
+                   return res.json({result: {success: true, message: 'Address removed'}}); 
+                })
+        },
         addToCart(req, res) {
             const username = req.user.username;
             const meal = req.body;
