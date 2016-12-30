@@ -171,7 +171,7 @@ module.exports = function (models, validator) {
         addMealToUser(username, meal) { 
             console.log('like');
             return new Promise((resolve, reject) => {
-                User.findOneAndUpdate({ 'username': username }, { $push: { 'favouriteMeals': meal } },
+                User.findOneAndUpdate({ 'username': username }, { $addToSet: { 'favouriteMeals': meal } },
                     (err, user) => {
                         if (err) {
                             return reject(err);
@@ -180,11 +180,15 @@ module.exports = function (models, validator) {
                     })
             });
         },
-        removeMealFromFavourites(username, meal) {
+        removeMealFromFavourites(user, meal) {
             console.log('remove');
             console.log(meal);
             return new Promise((resolve, reject) => {
-                User.findOneAndUpdate({ 'username': username }, { $pull: { 'favouriteMeals': meal } },(err, user) => {
+                const userMeal = user.favouriteMeals.find(x=>x._id === meal._id);
+                const index = user.favouriteMeals.indexOf(userMeal);
+                user.favouriteMeals.splice(index, 1);
+
+                User.findOneAndUpdate({ 'username': user.username }, { 'favouriteMeals': user.favouriteMeals },(err, user) => {
                     if (err) {
                         console.log(err);
                         return reject(err);

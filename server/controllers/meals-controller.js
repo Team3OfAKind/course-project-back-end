@@ -31,16 +31,16 @@ module.exports = ({ data }) => {
                 // });
         },
         dislikeMeal(req,res){
-            const username = req.user.username;
+            const user = req.user;
             const id = req.body._id;
             const meal = req.body;
             console.log('dislike');
             console.log(req.user.favouriteMeals);
             console.log(id);
-            data.removeUserFromMeal(id, username)
+            data.removeUserFromMeal(id, user.username)
                 .then((result) => {
                     //console.log(result);
-                    return data.removeMealFromFavourites(username, meal);
+                    return data.removeMealFromFavourites(user, meal);
                 })
                 .then((user) => {
                     //console.log(user);
