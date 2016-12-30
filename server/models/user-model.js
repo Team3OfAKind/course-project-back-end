@@ -38,7 +38,20 @@ const userSchema = new Schema({
         street: { type: String, required: true },
         city: { type: String, required: true }
     }],
-    favouriteMeals: []
+    favouriteMeals: [],
+    orders: [{
+        meals: [{
+            name: { type: String, required: true },
+            imageLink: { type: String },
+            price: { type: Number },
+        }],
+        address: {
+            street: { type: String, required: true },
+            city: { type: String, required: true }
+        },
+        totalPrice: { type: String, required: true},
+        orderDate: { type: Date, required: true }
+    }]
 });
 
 mongoose.model('User', userSchema);

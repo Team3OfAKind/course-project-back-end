@@ -15,7 +15,8 @@ module.exports = ({ data, passport }) => {
                 image: 'http://www.bathspa.ac.uk/media/WebProfilePictures/default_profile.jpg',
                 email: req.body.email,
                 cartMeals: [],
-                addresses: []
+                addresses: [],
+                orders: []
             };
             console.log('register contr ' + user.username);
             data.createUser(user)
