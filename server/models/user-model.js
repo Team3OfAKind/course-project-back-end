@@ -43,14 +43,16 @@ const userSchema = new Schema({
         meals: [{
             name: { type: String, required: true },
             imageLink: { type: String },
-            price: { type: Number },
+            price: { type: Number, required: true },
+            quantity: {type: Number, required: true }
         }],
         address: {
             street: { type: String, required: true },
             city: { type: String, required: true }
         },
         totalPrice: { type: String, required: true},
-        orderDate: { type: Date, required: true }
+        orderDate: { type: Date, required: true },
+        orderDateString: { type: String, required: true }
     }]
 });
 

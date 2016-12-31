@@ -97,7 +97,7 @@ module.exports = ({ data }) => {
                 .then(() => {
                     return res.json({result: {success: true, message: 'Meal removed from cart'}});
                 })
-        }, 
+        },
         getOrders(req, res) {
             const username = req.user.username;
             data.getUserOrders(username)
@@ -108,9 +108,12 @@ module.exports = ({ data }) => {
         addOrder(req, res) {
             const username = req.user.username;
             const order = req.body;
-            data.addUserOrder(username, order)
+            data.emptyCart(username)
                 .then(() => {
-                   return res.json({result: {success: true, message: 'Order placed successfully'}}); 
+                    data.addUserOrder(username, order)
+                        .then(() => {
+                            return res.json({result: {success: true, message: 'Order placed successfully'}}); 
+                        })
                 })
         }
     }

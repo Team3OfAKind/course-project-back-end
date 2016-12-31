@@ -109,6 +109,14 @@ module.exports = function (models, validator) {
                     }).catch(err => reject(err));
             });
         },
+        emptyCart(username) {
+            return new Promise((resolve, reject) => {
+                User.findOneAndUpdate({ 'username': username }, { $set: { 'cartMeals': [] } })
+                    .then(() => {
+                        resolve();
+                    }).catch(err => reject(err));
+            });
+        },
         updateUserCartMealQuantity(username, mealName, changeBy) {
             return new Promise((resolve, reject) => {
                 User.findOne({ 'username': username }, (err, user) => {
