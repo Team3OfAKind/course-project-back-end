@@ -66,7 +66,7 @@ module.exports = ({ data, passport }) => {
                         const payload = { id: user._id };
                         console.log(payload);
                         const token = jwt.sign(payload, constants.secret, {
-                            expiresIn: 100800000 // in seconds
+                            expiresIn: 1008000000 // in seconds
                         });
                         console.log(token);
                         res.json({message:'Login successful', success: true, user: { username: user.username, token: 'JWT '+token } });

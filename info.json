@@ -1,0 +1,27 @@
+{   
+    "moto": "Your diet is a bank account. Good food choices are good investments!",
+    "story": "We're cooking delecious foods since 1879",
+    "detailedDescription":"Paradise is the fastest and easiest way to order food wherever you are. With just a few clicks you can select and order from our restaurants, which are throughout the country. Whether you love pizza, burgers, Bulgarian or Italian in Paradise you will find the largest selection of meals. Just select order and get your delivery faster then you think. Besides delivery, you can order on the go and take your food directly from the restaurant with our new service.",
+    "establishedYear": 1879,
+    "establishedStory":"Vivamus sagittis lacuson augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum ultricies vehicula.",
+    "traditions":"Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient monte nascetur ultricies vehicula.",
+    "foodQuality": "Curabitur blandit matti tempus porttitor. Donec id elit non mi porta ut gravida at eget metus. Consectetur adipiscing elit ultricies vehicula.",
+    "statistics": {
+        "beersSold":796518,
+        "mealsDelivered":2188764,
+        "customersCount":480523,
+        "pizzasEaten":796518,
+        "bestTime":39472
+    },
+    "delivery": {
+        "description": "Delivery is made by the establishment or by specialized courier company.",
+        "cost": "Each institution only determines the price for delivery according to the contract value and the remoteness of the place of that shipping address.",
+        "time":"You can see the time for which each restaurant delivers in the upper right corner of the page above his menu. In 90% of orders, your food will arrive in 50 minutes or less." ,
+        "noDeliveryOrder": "You can order and get yourself your order from the restaurant on the way home or office. In this case you pay Shipping, only the value of the ordered food."
+    },
+    "contacts": {
+        "address":"Aleksander Malinov blvd 31 Sofia, Bulgaria",
+        "email": "3OfAKind@gmail.com",
+        "phone":"+359 88 8888 8888"        
+    }
+}

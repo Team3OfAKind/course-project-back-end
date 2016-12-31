@@ -12,8 +12,9 @@ module.exports = function(config) {
     const Meal = require('../models/meal-model'),
         User = require('../models/user-model'),
         Image = require('../models/image-model'),
+        RestaurantInfo = require('../models/info-model'),
         validator = require('../utilities/validator'),
-        models = { Meal, User, Image },
+        models = { Meal, User, Image, RestaurantInfo },
         data = {};
 
     fs.readdirSync('./server/data')

@@ -1,16 +1,10 @@
 'use strict';
 
-const router = require('express').Router();
-const passport = require('passport');
-
-module.exports = function({ app, controllers }) {
+module.exports = function ({ app, controllers, passport }) {
     const home = controllers.home;
+    const route = '/api';
 
-    router
-        .get('/test', passport.authenticate('jwt', { session: false }), (req, res) => {
-            res.send("here" + req.user._id);
-        })
-        .get('/api/gallery', home.getGallery);
-
-    app.use(router);
+    app.get(route + '/gallery', home.getGallery);
+    app.get(route + '/info', home.getRestaurantInfo);
+    app.get(route + '/contacts', home.getRestaurantContacts);
 };

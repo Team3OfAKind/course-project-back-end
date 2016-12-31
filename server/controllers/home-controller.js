@@ -10,6 +10,24 @@ module.exports = function({data}) {
                 .catch(err=>{
                     res.json({message: 'Photos not found'});
                 });
+        },
+        getRestaurantInfo(req,res){
+             data.getRestaurantInfo()
+                .then(info=>{
+                    res.json({result: {info}});
+                })
+                .catch(err=>{
+                    res.json({message: 'Information not found'});
+                });
+        },
+        getRestaurantContacts(req,res){
+             data.getRestaurantInfo()
+                .then(info=>{
+                    res.json({result: {contacts: info.contacts}});
+                })
+                .catch(err=>{
+                    res.json({message: 'Information not found'});
+                });
         }
     };
 };
