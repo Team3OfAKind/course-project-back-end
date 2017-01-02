@@ -16,7 +16,10 @@ module.exports = ({ data }) => {
 
             data.updateUserInformation(username, userInfo)
                 .then(() => {
-                    return res.json({result: {success: true, message: 'Profile information updated!'}});
+                    return res.json({ result: { success: true, message: 'Profile information updated!' } });
+                })
+                .catch(() => {
+                    return res.status(500).json({ error: { message: "User information could not be updated" } })
                 });
         },
         getCart(req, res) {
@@ -25,7 +28,7 @@ module.exports = ({ data }) => {
                 .then((meals) => {
                     res.json({ result: { meals } });
                 })
-        }, 
+        },
         getAddresses(req, res) {
             const username = req.user.username;
             data.getUserAddresses(username)
@@ -38,7 +41,7 @@ module.exports = ({ data }) => {
             const address = req.body;
             data.addUserAddress(username, address)
                 .then(() => {
-                   return res.json({result: {success: true, message: 'Address added'}}); 
+                    return res.json({ result: { success: true, message: 'Address added' } });
                 })
                 .catch(error => {
                     res.status(500).json({ error: { message: 'Failed to add address!' }});
@@ -49,32 +52,20 @@ module.exports = ({ data }) => {
             const address = req.body;
             data.removeUserAddress(username, address)
                 .then(() => {
-                   return res.json({result: {success: true, message: 'Address removed'}}); 
+                    return res.json({ result: { success: true, message: 'Address removed' } });
                 })
         },
         addToCart(req, res) {
             const username = req.user.username;
             const meal = req.body;
-            let updated = false;
-            data.getUserCartMeals(username)
-                .then((products) => {
-                    products.forEach(pr => {
-                        if (pr.name === meal.name){
-                            data.updateUserCartMealQuantity(username, meal.name, 1)
-                                .then(() => {
-                                    updated = true;
-                                    return res.json({result: {success: true, message: 'Meal added to cart'}});
-                                });
-                        }
-                    })
-                }).then(() => {
-                    if (!updated) {
-                        data.addMealToCart(username, meal)
-                            .then(() => {
-                                return res.json({result: {success: true, message: 'Meal added to cart'}});
-                            })
-                    }
+
+            data.addMealToCart(username, meal)
+                .then(() => {
+                    return res.json({ result: { success: true, message: 'Meal added to cart' } });
                 })
+                .catch(()=>{
+                    return res.status(500).json({error: {message: 'Meal could not be added to cart.'}});
+                });
         },
         updateMealCartQuantity(req, res) {
             const username = req.user.username;
@@ -83,7 +74,7 @@ module.exports = ({ data }) => {
 
             data.updateUserCartMealQuantity(username, mealName, changeBy)
                 .then(() => {
-                    return res.json({result: {success: true, message: 'Meal quantity updated'}});
+                    return res.json({ result: { success: true, message: 'Meal quantity updated' } });
                 })
 
         },
@@ -93,7 +84,7 @@ module.exports = ({ data }) => {
 
             data.removeMealFromCart(username, meal)
                 .then(() => {
-                    return res.json({result: {success: true, message: 'Meal removed from cart'}});
+                    return res.json({ result: { success: true, message: 'Meal removed from cart' } });
                 })
         },
         getOrders(req, res) {
@@ -110,7 +101,7 @@ module.exports = ({ data }) => {
                 .then(() => {
                     data.addUserOrder(username, order)
                         .then(() => {
-                            return res.json({result: {success: true, message: 'Order placed successfully'}}); 
+                            return res.json({ result: { success: true, message: 'Order placed successfully' } });
                         })
                         .catch(error => {
                             res.status(500).json({ error: { message: 'Failed to place order!' }});

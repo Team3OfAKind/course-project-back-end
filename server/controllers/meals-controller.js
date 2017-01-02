@@ -36,7 +36,7 @@ module.exports = ({ data }) => {
             const mealFromReq = req.body;
             mealFromReq.usersLiked.push(username);
             mealFromReq.likes += 1;
-            const changedInfo={
+            const changedInfo = {
                 usersLiked: mealFromReq.usersLiked,
                 likes: mealFromReq.likes
             }
@@ -52,10 +52,9 @@ module.exports = ({ data }) => {
                 .then((user) => {
                     res.json({ message: "Meal added to favourites!" });
                 })
-            // TODO: should error be catched
-            // .catch((err) => {
-            //     res.json({err});
-            // });
+                .catch((err) => {
+                    res.status(500).json({ error: { message: "Meal could not be added to favourites!" } });
+                });
         },
         dislikeMeal(req, res) {
             const user = req.user;
@@ -63,12 +62,12 @@ module.exports = ({ data }) => {
             const meal = req.body;
             let newLikes = meal.likes;
             const usernameIndex = meal.usersLiked.indexOf(user.username);
-            if(usernameIndex >= 0){
+            if (usernameIndex >= 0) {
                 meal.usersLiked.splice(usernameIndex, 1);
                 newLikes -= 1;
             }
 
-            const changedInfo={
+            const changedInfo = {
                 usersLiked: meal.usersLiked,
                 likes: newLikes
             }
@@ -84,10 +83,9 @@ module.exports = ({ data }) => {
                     //console.log(user);
                     res.json({ message: "Meal removed from favourites!" });
                 })
-            // TODO: should error be catched                
-            // .catch((err) => {
-            //     res.json({err});
-            // });
+                .catch((err) => {
+                    res.status(500).json({ error: { message: "Meal could not be removed to favourites!" } });
+                });
         }
     };
 };
