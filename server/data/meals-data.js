@@ -68,15 +68,15 @@ module.exports = function(models, validator) {
                 })
             })
         },
-        addUserToMeal(mealId, username) {
+        addUserToMeal(mealId, changedInfo, username) {
             return new Promise((resolve, reject) => {
                 const conditions = {
                     _id: mealId,
                     'usersLiked': { $ne: username }
                 }
-                Meal.findOneAndUpdate(conditions, { $addToSet: { 'usersLiked': username } },
+                Meal.findOneAndUpdate(conditions, changedInfo,
                     (err, meal) => {
-                        console.log(meal);
+
                         if (err) {
                             return reject(err);
                         }

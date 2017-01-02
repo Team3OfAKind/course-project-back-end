@@ -33,8 +33,15 @@ module.exports = ({ data }) => {
             console.log('like');
             const username = req.user.username;
             const id = req.body._id;
+            const mealFromReq = req.body;
+            mealFromReq.usersLiked.push(username);
+            mealFromReq.likes += 1;
+            const changedInfo={
+                usersLiked: mealFromReq.usersLiked,
+                likes: mealFromReq.likes
+            }
             console.log(req.body);
-            data.addUserToMeal(id, username)
+            data.addUserToMeal(id, changedInfo, username)
                 .then((meal) => {
                     console.log(meal);
                     if (!meal) {
@@ -45,10 +52,10 @@ module.exports = ({ data }) => {
                 .then((user) => {
                     res.json({ message: "Meal added to favourites!" });
                 })
-                // TODO: should error be catched
-                // .catch((err) => {
-                //     res.json({err});
-                // });
+            // TODO: should error be catched
+            // .catch((err) => {
+            //     res.json({err});
+            // });
         },
         dislikeMeal(req, res) {
             const user = req.user;
@@ -66,10 +73,10 @@ module.exports = ({ data }) => {
                     //console.log(user);
                     res.json({ message: "Meal removed from favourites!" });
                 })
-                // TODO: should error be catched                
-                // .catch((err) => {
-                //     res.json({err});
-                // });
+            // TODO: should error be catched                
+            // .catch((err) => {
+            //     res.json({err});
+            // });
         }
     };
 };

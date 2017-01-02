@@ -18,13 +18,14 @@ let MealSchema = new Schema({
         type: String
     },
     price: {
-        type: String,
+        type: Number,
         required: true
     },
-    usersLiked: [String]
+    usersLiked: [String],
+    likes: { type: Number, default: 0 }
 });
 
-MealSchema.methods.getActive = function() {
+MealSchema.methods.getActive = function () {
     if (+Date.now() > +new Date(this.endDate)) {
         return 'arrived';
     } else {
