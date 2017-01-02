@@ -84,9 +84,9 @@ module.exports = function(models, validator) {
                     })
             });
         },
-        removeUserFromMeal(mealId, username) {
+        removeUserFromMeal(mealId, changedInfo) {
             return new Promise((resolve, reject) => {
-                Meal.update({ _id: mealId }, { $pull: { 'usersLiked': username } },
+                Meal.update({ _id: mealId }, changedInfo,
                     (err, meal) => {
                         if (err) {
                             return reject(err);

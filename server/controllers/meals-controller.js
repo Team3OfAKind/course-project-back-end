@@ -61,10 +61,21 @@ module.exports = ({ data }) => {
             const user = req.user;
             const id = req.body._id;
             const meal = req.body;
+            let newLikes = meal.likes;
+            const usernameIndex = meal.usersLiked.indexOf(user.username);
+            if(usernameIndex >= 0){
+                meal.usersLiked.splice(usernameIndex, 1);
+                newLikes -= 1;
+            }
+
+            const changedInfo={
+                usersLiked: meal.usersLiked,
+                likes: newLikes
+            }
             console.log('dislike');
             console.log(req.user.favouriteMeals);
             console.log(id);
-            data.removeUserFromMeal(id, user.username)
+            data.removeUserFromMeal(id, changedInfo)
                 .then((result) => {
                     //console.log(result);
                     return data.removeMealFromFavourites(user, meal);
