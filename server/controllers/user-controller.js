@@ -21,7 +21,6 @@ module.exports = ({ data }) => {
         },
         getCart(req, res) {
             const username = req.user.username;
-            console.log("get meals " + username);
             data.getUserCartMeals(username)
                 .then((meals) => {
                     res.json({ result: { meals } });
@@ -41,6 +40,9 @@ module.exports = ({ data }) => {
                 .then(() => {
                    return res.json({result: {success: true, message: 'Address added'}}); 
                 })
+                .catch(error => {
+                    res.status(500).json({ error: { message: 'Failed to add address!' }});
+                });
         },
         removeAddress(req, res) {
             const username = req.user.username;
@@ -110,7 +112,10 @@ module.exports = ({ data }) => {
                         .then(() => {
                             return res.json({result: {success: true, message: 'Order placed successfully'}}); 
                         })
-                })
+                        .catch(error => {
+                            res.status(500).json({ error: { message: 'Failed to place order!' }});
+                        });
+                    })
         }
     }
 }

@@ -42,7 +42,6 @@ module.exports = function (models, validator) {
                 const salt = hashing.getSalt(),
                     passHash = hashing.getPassHash(salt, user.passHash);
                 if (!validator.isValidUser(user)) {
-                    console.log('invalid!');
                     return reject({ error: 'Invalid information' });
                 }
                 const newUser = new User({
@@ -56,7 +55,6 @@ module.exports = function (models, validator) {
                     cartMeals: user.cartMeals,
                     addresses: user.addresses
                 });
-                console.log('adding user')
                 newUser.save(err => {
 
                     if (err) {
@@ -189,19 +187,13 @@ module.exports = function (models, validator) {
             });
         },
         removeMealFromFavourites(user, meal) {
-            console.log('remove');
-            console.log(meal);
             return new Promise((resolve, reject) => {
                 const index = user.favouriteMeals.findIndex(x=>x._id+'' === meal._id+'');
-                console.log('INDEX: '+ index);
                 user.favouriteMeals.splice(index, 1);
-                console.log(user.favouriteMeals);
                 User.findOneAndUpdate({ 'username': user.username }, { 'favouriteMeals': user.favouriteMeals },(err, user) => {
                     if (err) {
-                        console.log(err);
                         return reject(err);
                     }
-                    console.log(user);
                     resolve(user);
                 });
             });
