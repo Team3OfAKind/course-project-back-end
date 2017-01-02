@@ -23,40 +23,19 @@ module.exports = ({ data, passport }) => {
                 .then(() => {
                     res.json({ message: 'Registration successfull' });
                 })
-                .catch(() => {
-                    res.json({ error: 'Registration failed' });
+                .catch(error => {
+                    console.log(error);
+                    res.status(400).json({ error:{ message: 'Registration failed!' }});
                 });
         },
         loginLocal(req, res, next) {
             const username = req.body.username;
             const password = req.body.password;
 
-            // passport.authenticate('local', function (err, user, info) {
-            //     if (err) {
-            //         console.log(err);
-            //         throw err;
-            //     }
-            //     if (!user) {
-            //         console.log('no user found');
-            //         return res.send({ msg: 'Login incorrect' });
-            //     }
-            //     req.login(user, function (err) {
-            //         if (err) {
-            //             throw err;
-            //         }
-            //         const secretOrKey = constants.secret;
-            //         const payload = {id: user._id}
-            //         const token = jwt.sign(payload, secretOrKey);
-            //         console.log(user);
-            //         console.log(token);
-            //         res.send({ user:{ username:user.username, token }});
-            //     });
-            // })(req, res, next);
-
             data.getUserByUsername(username)
                 .then(user => {
                     if (!user) {
-                        res.status(401).json({ message: "no such user found" });
+                        res.status(401).json({error: { message: "Wrong username or password" }});
                     }
 
                     const passHash = encryptor.getPassHash(user.salt, password);
@@ -71,12 +50,12 @@ module.exports = ({ data, passport }) => {
                         console.log(token);
                         res.json({message:'Login successful', success: true, user: { username: user.username, token: 'JWT '+token } });
                     } else {
-                        res.status(401).json({ message: "passwords did not match" });
+                        res.status(401).json({error: { message: "Wrong username or password" }});
                     }
                 })
                 .catch(err => {
                     console.log(err);
-                    res.status(400).json({ error: 'Login unsuccessful!' });
+                    res.status(400).json({ error:{message:'Wrong username or password' }});
                 })
 
         },

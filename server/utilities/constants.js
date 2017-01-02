@@ -6,7 +6,6 @@ const secretStrings = {
 };
 
 module.exports = {
-    competitionStatus: ['passed', 'ongoing', 'upcoming'],
     MIN_USERNAME_LENGTH: 5,
     MAX_USERNAME_LENGTH: 50,
     MIN_NAME_LENGTH: 3,
